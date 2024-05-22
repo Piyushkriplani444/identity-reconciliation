@@ -1,30 +1,16 @@
-// src/index.ts
 import express, { Express, Request, Response } from 'express';
+const identityRouter = require('./identity-resolve/routes/index');
 import dotenv from 'dotenv';
-
-/*
- * Load up and parse configuration details from
- * the `.env` file to the `process.env`
- * object of Node.js
- */
+import bodyParser from 'body-parser';
 dotenv.config();
 
-/*
- * Create an Express application and get the
- * value of the PORT environment variable
- * from the `process.env`
- */
 const app: Express = express();
 const port = process.env.PORT || 3000;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-/* Define a route for the root path ("/")
- using the HTTP GET method */
-app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server');
-});
+app.use('/', identityRouter);
 
-/* Start the Express app and listen
- for incoming requests on the specified port */
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);
 });
