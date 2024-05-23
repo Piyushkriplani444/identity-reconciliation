@@ -3,6 +3,6 @@ const identityController = require('../controllers/identityController');
 
 const router = express.Router();
 
-router.post('/identity', identityController.generateIdentity);
+router.post('/identify', identityController.generateIdentity);
 
 module.exports = router;

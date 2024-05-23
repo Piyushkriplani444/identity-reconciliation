@@ -7,6 +7,12 @@ exports.generateIdentity = async (req: Request, res: Response) => {
 
         console.log('email', email);
         console.log('phoneNumber', phoneNumber);
+        if (
+            (email == undefined || email == null || email == '') &&
+            (phoneNumber == undefined || phoneNumber == null || phoneNumber == '')
+        ) {
+            throw new Error('please provide email and phoneNumber in request').message;
+        }
 
         const result = await IdentityService.checkIdentity(req, email, phoneNumber);
         if (result) {
@@ -16,6 +22,6 @@ exports.generateIdentity = async (req: Request, res: Response) => {
         }
     } catch (error) {
         console.log(error);
-        res.status(500).send(error);
+        res.status(500).send({ error });
     }
 };
